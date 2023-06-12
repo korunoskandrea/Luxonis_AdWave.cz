@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+        - "5432:5432"
+    environment:
+      POSTGRES_DB: "luxonis_ad"
+      POSTGRES_PASSWORD: "andrea123"
+      POSTGRES_USER: "postgres"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+  nginx:
+    build:
+      context: ./nginx_proxy
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
